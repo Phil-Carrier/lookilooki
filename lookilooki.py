@@ -1,6 +1,4 @@
-import pygame
-import sys
-import math
+import pygame, time, sys, math, random
 pygame.init()
 
 screen_wdt = 800
@@ -21,28 +19,15 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
-    # Get the mouse position
+    screen.fill(WHITE)
     mouseX, mouseY = pygame.mouse.get_pos()
-
-    # Calculate the angle between the image center and the mouse position
     deltaX = mouseX - (lookX + look_width // 2)
     deltaY = mouseY - (lookY + look_height // 2)
-    angle = math.degrees((math.atan2(-deltaY, deltaX)) + 0.15)  # Negate deltaY to match screen coordinates
-
-    # Rotate the image
+    angle = math.degrees((math.atan2(-deltaY, deltaX)) + 0.15)
     rotatedImg = pygame.transform.rotate(lookImg_original, angle)
     rotated_rect = rotatedImg.get_rect(center=(lookX + look_width // 2, lookY + look_height // 2))
-
-    # Clear screen
-    screen.fill(WHITE)
-
-    # Draw the rotated image
     screen.blit(rotatedImg, rotated_rect.topleft)
-
-    # Update display
     pygame.display.update()
 
-# Quit Pygame
 pygame.quit()
 sys.exit()
